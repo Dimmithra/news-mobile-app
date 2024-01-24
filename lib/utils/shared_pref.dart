@@ -1,0 +1,1 @@
+const kThemeStyle = 'kThemeStyle';

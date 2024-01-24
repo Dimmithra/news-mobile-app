@@ -21,7 +21,8 @@ dependencies:
   intl: ^0.19.0
   loading_animation_widget: ^1.2.0+4
   cached_network_image: ^3.3.1
-
+  # custom_refresh_indicator: ^3.0.0
+  flutter_secure_storage: ^9.0.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
