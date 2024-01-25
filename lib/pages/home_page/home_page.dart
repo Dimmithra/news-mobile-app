@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:news_app/pages/home_page/homewidget.dart';
 import 'package:news_app/provider/home_provider.dart';
-import 'package:news_app/provider/splash_provider.dart';
 import 'package:news_app/utils/colors.dart';
-import 'package:news_app/utils/common_loader.dart';
 import 'package:news_app/utils/main_body.dart';
-import 'package:news_app/widgets/common_news_card.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -19,9 +18,8 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      // Provider.of<HomeProvider>(context, listen: false).getLoadAllData(context);
-      // Provider.of<SplashProvider>(context, listen: false)
-      //     .getLoadAllData(context);
+      Provider.of<HomeProvider>(context, listen: false)
+          .determinePosition(context);
     });
     super.initState();
   }
@@ -44,25 +42,45 @@ class _HomeScreenState extends State<HomeScreen> {
           },
         )
       ],
-      body: Consumer2<SplashProvider, HomeProvider>(
-        builder: (context, splashProvider, homeProvider, child) {
-          if (splashProvider.getloadSplashScreen) {
-            return const CommonPageLoader();
-          }
-
-          return ListView.builder(
-            itemCount: splashProvider.getnewsPaperResponseData!.articles.length,
-            itemBuilder: (context, index) {
-              return CommonNewsCard(
-                  newsTitle: splashProvider
-                      .getnewsPaperResponseData!.articles[index].title,
-                  imageUrl:
-                      "${splashProvider.getnewsPaperResponseData!.articles[index].urlToImage}",
-                  errorWidget: const Image(
-                    image: AssetImage("assets/images/newspaper.png"),
-                    height: 200,
-                    width: 200,
-                  ));
+      body: homePage(context),
+      bottomNavigationBar: Consumer<HomeProvider>(
+        builder: (context, homeProvider, child) {
+          return BottomNavigationBar(
+            items: const [
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home),
+                label: 'Global News',
+                backgroundColor: Colors.red,
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.my_location_outlined),
+                label: 'Local News',
+                backgroundColor: Colors.green,
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.featured_play_list),
+                label: 'Discover',
+                backgroundColor: Colors.green,
+              ),
+            ],
+            currentIndex: homeProvider.selectedIndex,
+            selectedItemColor: Colors.amber[800],
+            onTap: (int index) async {
+              if (index == 1) {
+                Position position =
+                    await homeProvider.determinePosition(context);
+                setState(() {
+                  homeProvider.selectedIndex = index;
+                  homeProvider.geoLocation =
+                      'latitude:${position.latitude} Longer:${position.longitude}';
+                  homeProvider.googleAddressLocation(position);
+                  homeProvider.location;
+                });
+              } else {
+                setState(() {
+                  homeProvider.selectedIndex = index;
+                });
+              }
             },
           );
         },

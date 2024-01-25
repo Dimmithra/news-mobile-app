@@ -1,17 +1,17 @@
-class NewsPaperResponseData {
+class LocalNewsModel {
   String? status;
   int? totalResults;
-  List<Articles>? articles;
+  List<LocalArticles>? localArticle;
 
-  NewsPaperResponseData({this.status, this.totalResults, this.articles});
+  LocalNewsModel({this.status, this.totalResults, this.localArticle});
 
-  NewsPaperResponseData.fromJson(Map<String, dynamic> json) {
+  LocalNewsModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     totalResults = json['totalResults'];
     if (json['articles'] != null) {
-      articles = <Articles>[];
+      localArticle = <LocalArticles>[];
       json['articles'].forEach((v) {
-        articles!.add(new Articles.fromJson(v));
+        localArticle!.add(new LocalArticles.fromJson(v));
       });
     }
   }
@@ -20,14 +20,14 @@ class NewsPaperResponseData {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['status'] = this.status;
     data['totalResults'] = this.totalResults;
-    if (this.articles != null) {
-      data['articles'] = this.articles!.map((v) => v.toJson()).toList();
+    if (this.localArticle != null) {
+      data['articles'] = this.localArticle!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
-class Articles {
+class LocalArticles {
   Source? source;
   String? author;
   String? title;
@@ -37,7 +37,7 @@ class Articles {
   String? publishedAt;
   String? content;
 
-  Articles(
+  LocalArticles(
       {this.source,
       this.author,
       this.title,
@@ -47,7 +47,7 @@ class Articles {
       this.publishedAt,
       this.content});
 
-  Articles.fromJson(Map<String, dynamic> json) {
+  LocalArticles.fromJson(Map<String, dynamic> json) {
     source =
         json['source'] != null ? new Source.fromJson(json['source']) : null;
     author = json['author'];

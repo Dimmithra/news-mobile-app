@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:news_app/model/get_allnews_data_model.dart';
 import 'package:news_app/pages/home_page/home_page.dart';
 import 'package:news_app/services/common_http.dart';
@@ -8,6 +9,8 @@ import 'dart:developer' as dev;
 import 'package:news_app/utils/url.dart';
 
 class SplashProvider extends ChangeNotifier {
+  final storage = new FlutterSecureStorage();
+
   bool loadSplashScreen = false;
   bool get getloadSplashScreen => loadSplashScreen;
   setloadSplashScreen(val) {
@@ -29,10 +32,13 @@ class SplashProvider extends ChangeNotifier {
   Future<void> getLoadAllData(context) async {
     try {
       setloadSplashScreen(true);
-      final CommonHttp commonHttp = CommonHttp("");
-      final response = await commonHttp.get(kApiKey);
+      final CommonHttp commonHttp = CommonHttp();
+      final response = await commonHttp.get(
+        kGetAllNews,
+        '',
+      );
 
-      dev.log(response);
+      // dev.log(response);
       NewsPaperResponseData temp =
           NewsPaperResponseData.fromJson(jsonDecode(response));
       if (temp.status == "ok") {
@@ -43,7 +49,7 @@ class SplashProvider extends ChangeNotifier {
           },
         ), (route) => false);
       } else {
-        dev.log(temp.status);
+        dev.log("${temp.status}");
       }
     } catch (e) {
       dev.log("$e");
@@ -59,8 +65,8 @@ class SplashProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Article? article;
-  Article? get getarticle => article;
+  Articles? article;
+  Articles? get getarticle => article;
   setarticle(val) {
     article = val;
     notifyListeners();

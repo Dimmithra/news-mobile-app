@@ -10,7 +10,7 @@ class CommonPageLoader extends StatelessWidget {
   Widget build(BuildContext context) {
     return LoadingAnimationWidget.fourRotatingDots(
       color: color ?? Colors.blue,
-      size: 75,
+      size: 50,
     );
   }
 }

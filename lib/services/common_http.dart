@@ -2,11 +2,11 @@ import 'package:http/http.dart' as http;
 // import 'dart:developer' as dev;
 
 class CommonHttp {
-  final String baseUrl;
+  // final String searchType;
 
-  CommonHttp(this.baseUrl);
+  CommonHttp();
 
-  Future<dynamic> get(String endpoint) async {
+  Future<dynamic> get(String endpoint, String searchType) async {
     final response = await http.get(Uri.parse(endpoint));
 
     if (response.statusCode == 200) {

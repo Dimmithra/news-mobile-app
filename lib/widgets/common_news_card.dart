@@ -11,15 +11,24 @@ class CommonNewsCard extends StatelessWidget {
     required this.newsTitle,
     required this.imageUrl,
     required this.errorWidget,
+    this.onTap,
+    this.shareBtn,
+    required this.auther,
+    required this.publishDate,
   });
   final String newsTitle;
   final String imageUrl;
   final Widget errorWidget;
+  final Function()? onTap;
+  final Function()? shareBtn;
+  final String auther;
+  final String publishDate;
   @override
   Widget build(BuildContext context) {
     return Consumer<HomeProvider>(
       builder: (context, homeProvider, child) {
         return InkWell(
+          onTap: onTap,
           child: Container(
             decoration: BoxDecoration(),
             child: Card(
@@ -29,8 +38,6 @@ class CommonNewsCard extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -53,7 +60,7 @@ class CommonNewsCard extends StatelessWidget {
                             SizedBox(
                                 width: MediaQuery.of(context).size.width * .13,
                                 child: IconButton(
-                                  onPressed: () {},
+                                  onPressed: shareBtn,
                                   icon: Icon(Icons.more_vert,
                                       color: homeProvider.getDarkTheme
                                           ? Colors.white
@@ -71,6 +78,28 @@ class CommonNewsCard extends StatelessWidget {
                           errorWidget: (context, url, error) {
                             return errorWidget;
                           },
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.4,
+                              child: Text(
+                                auther,
+                                style: TextStyle(
+                                    fontSize: 12, fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.5,
+                              child: Text(
+                                publishDate,
+                                style: TextStyle(
+                                  fontSize: 11,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     )
