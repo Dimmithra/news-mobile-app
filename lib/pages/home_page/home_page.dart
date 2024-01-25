@@ -34,11 +34,18 @@ class _HomeScreenState extends State<HomeScreen> {
         Consumer<HomeProvider>(
           builder: (context, homeProvider, child) {
             return IconButton(
-                onPressed: () async {
-                  await homeProvider.toggleTheme();
-                },
-                icon: Icon(
-                    homeProvider.darkMode ? Ionicons.moon : Ionicons.sunny));
+              onPressed: () async {
+                await homeProvider.toggleTheme();
+              },
+              icon: Icon(
+                homeProvider.darkMode
+                    ? Ionicons.moon_sharp
+                    : Ionicons.sunny_sharp,
+                color: homeProvider.darkMode
+                    ? Colors.yellow.shade700
+                    : Colors.white,
+              ),
+            );
           },
         )
       ],
@@ -46,9 +53,14 @@ class _HomeScreenState extends State<HomeScreen> {
       bottomNavigationBar: Consumer<HomeProvider>(
         builder: (context, homeProvider, child) {
           return BottomNavigationBar(
+            iconSize: 30,
+            backgroundColor:
+                homeProvider.darkMode ? kHeaderDarkMode : Colors.grey.shade800,
             items: const [
               BottomNavigationBarItem(
-                icon: Icon(Icons.home),
+                icon: Icon(
+                  Icons.home,
+                ),
                 label: 'Global News',
                 backgroundColor: Colors.red,
               ),
@@ -63,6 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 backgroundColor: Colors.green,
               ),
             ],
+            unselectedItemColor: kdefWhiteColor,
             currentIndex: homeProvider.selectedIndex,
             selectedItemColor: Colors.amber[800],
             onTap: (int index) async {

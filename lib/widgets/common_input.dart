@@ -58,28 +58,6 @@ class CommonTextFeil extends StatelessWidget {
         ),
         suffixIcon: suffixIcon,
       ),
-      validator: (value) {
-        //mobile regex
-        String mobilePattern = r'(^(?:[+0]9)?[0-9]{10,12}$)';
-        RegExp regExp = new RegExp(mobilePattern);
-        //email regex
-        String emailreg = r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)*$';
-        RegExp regex = new RegExp(emailreg);
-        if (validation == true) {
-          if (value == null || value.isEmpty) {
-            return hinttext + 'Required';
-          } else if (mobileNoValidater == true) {
-            if (!regExp.hasMatch(value)) {
-              return 'Please enter valid mobile number';
-            }
-          } else if (emailValidation == true) {
-            if (!regex.hasMatch(value)) {
-              return 'Please enter valid Email Address';
-            }
-          }
-          return null;
-        }
-      },
       controller: controller,
     );
   }

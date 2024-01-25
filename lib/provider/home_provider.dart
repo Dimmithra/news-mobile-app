@@ -29,7 +29,7 @@ class HomeProvider extends ChangeNotifier {
   }
 
   //bottom nav bar
-  int selectedIndex = 0;
+  int selectedIndex = 1;
 
   void onTapIcon(int index) {
     selectedIndex = index;
@@ -92,13 +92,15 @@ class HomeProvider extends ChangeNotifier {
       // 'https:newsapi.org/v2/everything?q=$searchType&from=$formattedDate&sortBy=publishedAt&apiKey=ff00d9c8fc8243f7a5923902de3709a8');
       final response = await http.get(url);
       if (response.statusCode == 200) {
-        dev.log(response.body);
+        // dev.log(response.body);
         LocalNewsModel temp =
             LocalNewsModel.fromJson(jsonDecode(response.body));
         if (temp.status == "ok") {
           setlocalNewsModel(temp);
           notifyListeners();
         } else {
+          newsapp_message(context, messageHeader: "${temp.status}", btnType: 2)
+              .show();
           dev.log("${temp.status}");
         }
       } else {
@@ -192,10 +194,49 @@ class HomeProvider extends ChangeNotifier {
       location = '${place.country}';
       dev.log(location);
       await storage.write(key: kcountry, value: place.country);
+      notifyListeners();
     } catch (e) {
       dev.log(e.toString());
     } finally {
       setloadMapData(false);
+    }
+  }
+
+  //search Filter data
+  bool searchDataLoading = false;
+  bool get getsearchDataLoading => searchDataLoading;
+  setsearchDataLoading(val) {
+    searchDataLoading = val;
+    notifyListeners();
+  }
+
+  Future<void> getSearchFilterData(context, String searchType) async {
+    try {
+      setsearchDataLoading(true);
+      dev.log(searchType);
+      final Uri url = Uri.parse(
+          'https://newsapi.org/v2/everything?q=$searchType&apiKey=e890f258dab74a0b8df549648fcc3fb1');
+      // 'https:newsapi.org/v2/everything?q=$searchType&from=$formattedDate&sortBy=publishedAt&apiKey=ff00d9c8fc8243f7a5923902de3709a8');
+      final response = await http.get(url);
+      if (response.statusCode == 200) {
+        // dev.log(response.body);
+        LocalNewsModel temp =
+            LocalNewsModel.fromJson(jsonDecode(response.body));
+        if (temp.status == "ok") {
+          setlocalNewsModel(temp);
+          notifyListeners();
+        } else {
+          newsapp_message(context, messageHeader: "${temp.status}", btnType: 2)
+              .show();
+          dev.log("${temp.status}");
+        }
+      } else {
+        throw Exception('Failed to load data');
+      }
+    } catch (e) {
+      dev.log("$e");
+    } finally {
+      setsearchDataLoading(false);
     }
   }
 }

@@ -1,37 +1,58 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/provider/home_provider.dart';
+import 'package:news_app/utils/colors.dart';
 import 'package:news_app/utils/common_loader.dart';
+import 'package:news_app/utils/main_body.dart';
 import 'package:news_app/utils/network_connection_check_class.dart';
 import 'package:news_app/widgets/common_news_card.dart';
 import 'package:provider/provider.dart';
 
-class LocalNews extends StatefulWidget {
-  const LocalNews({super.key});
+class FilterPages extends StatefulWidget {
+  const FilterPages({
+    super.key,
+    required this.title,
+    required this.searchType,
+  });
+  final String title;
+  final String searchType;
 
   @override
-  State<LocalNews> createState() => _LocalNewsState();
+  State<FilterPages> createState() => _FilterPagesState();
 }
 
-class _LocalNewsState extends State<LocalNews> {
+class _FilterPagesState extends State<FilterPages> {
   @override
   void initState() {
-    InternetConnectionChecker().isInternetAvailable(context);
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      InternetConnectionChecker().isInternetAvailable(context);
       Provider.of<HomeProvider>(context, listen: false)
-          .getLocalNewsData(context);
+          .getSearchFilterData(context, widget.searchType);
     });
-
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return MainBody(
+      automaticallyImplyLeading: false,
+      title: widget.title,
+      leading: GestureDetector(
+        child: const Icon(
+          Icons.arrow_back_ios,
+          color: kdefWhiteColor,
+        ),
+        onTap: () {
+          Navigator.pop(context);
+        },
+      ),
       body: Consumer<HomeProvider>(
         builder: (context, homeProvider, child) {
-          if (homeProvider.getsearchData) {
-            return const Center(child: CommonPageLoader());
+          if (homeProvider.getsearchDataLoading) {
+            return const Center(
+              child: CommonPageLoader(),
+            );
           }
+
           return ListView.builder(
             itemCount: homeProvider.getlocalNewsModel!.localArticle!.length,
             itemBuilder: (context, index) {

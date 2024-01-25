@@ -11,11 +11,12 @@ class MainBody extends StatefulWidget {
     this.floatingActionButton,
     this.appBarColor,
     this.appbarTitleColor,
-    this.automaticallyImplyLeading = true,
+    this.automaticallyImplyLeading = false,
     this.drawer,
     this.iconThemeColor,
     this.bottomNavigationBar,
     this.actions,
+    this.leading,
   });
 
   final Widget body;
@@ -28,6 +29,7 @@ class MainBody extends StatefulWidget {
   final Color? iconThemeColor;
   final Widget? bottomNavigationBar;
   final List<Widget>? actions;
+  final Widget? leading;
   @override
   State<MainBody> createState() => _MainBodyState();
 }
@@ -48,6 +50,7 @@ class _MainBodyState extends State<MainBody> {
             iconTheme: IconThemeData(
               color: widget.iconThemeColor ?? kdefWhiteColor,
             ),
+            leading: widget.leading,
             automaticallyImplyLeading: widget.automaticallyImplyLeading,
             title: Text(
               widget.title,
