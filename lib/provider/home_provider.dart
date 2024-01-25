@@ -29,7 +29,7 @@ class HomeProvider extends ChangeNotifier {
   }
 
   //bottom nav bar
-  int selectedIndex = 1;
+  int selectedIndex = 0;
 
   void onTapIcon(int index) {
     selectedIndex = index;
@@ -149,6 +149,7 @@ class HomeProvider extends ChangeNotifier {
       newsapp_message(context,
           messageHeader: 'Notification',
           btnType: 1,
+          showIcon: true,
           messageBody: "Please Enable Your Location to get better experience",
           button: [
             DialogButton(
