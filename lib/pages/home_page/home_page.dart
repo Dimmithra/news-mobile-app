@@ -42,7 +42,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                     ));
                   },
-                  icon: const Icon(Icons.search))
+                  icon: const Icon(
+                    Icons.search_outlined,
+                    size: 35,
+                  ))
               : Container();
         },
       ),
@@ -61,6 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ? Colors.yellow.shade700
                     : Colors.white,
               ),
+              iconSize: 30,
             );
           },
         )
