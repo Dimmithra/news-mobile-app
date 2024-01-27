@@ -24,20 +24,22 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.all(10.0),
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SafeArea(
-              child: Image(
-                image: AssetImage("assets/images/splash_image.png"),
+    return const Center(
+      child: Padding(
+        padding: EdgeInsets.all(10.0),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SafeArea(
+                child: Image(
+                  image: AssetImage("assets/images/splashimage.png"),
+                ),
               ),
-            ),
-            CommonPageLoader()
-          ],
+              CommonPageLoader()
+            ],
+          ),
         ),
       ),
     );

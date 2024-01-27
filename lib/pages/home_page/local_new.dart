@@ -29,8 +29,10 @@ class _LocalNewsState extends State<LocalNews> {
     return Scaffold(
       body: Consumer<HomeProvider>(
         builder: (context, homeProvider, child) {
-          if (homeProvider.getsearchData) {
-            return const Center(child: CommonPageLoader());
+          if (homeProvider.getsearchData || homeProvider.getloadMapData) {
+            return const Center(
+              child: CommonPageLoader(),
+            );
           }
           return ListView.builder(
             itemCount: homeProvider.getlocalNewsModel!.localArticle!.length,

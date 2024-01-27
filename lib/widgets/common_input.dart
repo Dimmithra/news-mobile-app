@@ -5,8 +5,6 @@ class CommonTextFeil extends StatelessWidget {
     super.key,
     required this.hinttext,
     required this.label,
-    this.suffixicon,
-    this.validation = false,
     this.controller,
     this.fillColor,
     this.maxLength,
@@ -15,13 +13,9 @@ class CommonTextFeil extends StatelessWidget {
     this.onChanged,
     this.labelColor,
     this.hinttextColor,
-    this.mobileNoValidater = false,
-    this.emailValidation = false,
   });
   final String hinttext;
   final String label;
-  final Widget? suffixicon;
-  final bool? validation;
   final Color? fillColor;
   final TextEditingController? controller;
   final int? maxLength;
@@ -30,8 +24,7 @@ class CommonTextFeil extends StatelessWidget {
   final Function(String)? onChanged;
   final Color? labelColor;
   final Color? hinttextColor;
-  final bool mobileNoValidater;
-  final bool emailValidation;
+
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -50,7 +43,6 @@ class CommonTextFeil extends StatelessWidget {
             color: labelColor,
           ),
         ),
-        suffix: suffixicon,
         filled: true,
         fillColor: fillColor,
         border: OutlineInputBorder(

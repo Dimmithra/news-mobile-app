@@ -36,6 +36,7 @@ class _FilterPagesState extends State<FilterPages> {
     return MainBody(
       automaticallyImplyLeading: false,
       title: widget.title,
+      appbarTitleColor: kdefWhiteColor,
       leading: GestureDetector(
         child: const Icon(
           Icons.arrow_back_ios,

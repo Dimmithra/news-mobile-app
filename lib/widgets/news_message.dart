@@ -48,13 +48,10 @@ Alert newsapp_message(
             ),
           Text(
             messageHeader,
-            style: TextStyle(
+            style: const TextStyle(
               fontWeight: FontWeight.bold,
-              color: btnType == 1
-                  ? kNotification
-                  : btnType == 2
-                      ? kWarrningColor
-                      : kErrorColor,
+              color: Colors.black,
+              fontSize: 20,
             ),
           ),
           notificationImage ?? Container(),

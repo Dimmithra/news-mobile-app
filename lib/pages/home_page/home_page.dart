@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:news_app/pages/home_page/homewidget.dart';
+import 'package:news_app/pages/search/search.dart';
 import 'package:news_app/provider/home_provider.dart';
 import 'package:news_app/utils/colors.dart';
 import 'package:news_app/utils/main_body.dart';
@@ -30,6 +31,21 @@ class _HomeScreenState extends State<HomeScreen> {
       title: "News",
       appbarTitleColor: kdefWhiteColor,
       appBarColor: kdefWhiteColor,
+      leading: Consumer<HomeProvider>(
+        builder: (context, homeProvider, child) {
+          return homeProvider.selectedIndex == 0
+              ? IconButton(
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(
+                      builder: (context) {
+                        return const SearchScreen();
+                      },
+                    ));
+                  },
+                  icon: const Icon(Icons.search))
+              : Container();
+        },
+      ),
       actions: [
         Consumer<HomeProvider>(
           builder: (context, homeProvider, child) {

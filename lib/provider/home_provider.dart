@@ -141,6 +141,7 @@ class HomeProvider extends ChangeNotifier {
   String longatude = '';
 
   Future<Position> determinePosition(context) async {
+    setloadMapData(true);
     bool serviceEnabled;
     LocationPermission permission;
 
@@ -182,11 +183,11 @@ class HomeProvider extends ChangeNotifier {
   }
 
   Future<void> googleAddressLocation(Position position) async {
-    setloadMapData(true);
     List<Placemark> placemarks =
         await placemarkFromCoordinates(position.latitude, position.longitude);
     dev.log(placemarks.toString());
     try {
+      setloadMapData(true);
       dev.log(placemarks.toString());
 
       Placemark place = placemarks[0];
@@ -220,11 +221,18 @@ class HomeProvider extends ChangeNotifier {
       // 'https:newsapi.org/v2/everything?q=$searchType&from=$formattedDate&sortBy=publishedAt&apiKey=ff00d9c8fc8243f7a5923902de3709a8');
       final response = await http.get(url);
       if (response.statusCode == 200) {
-        // dev.log(response.body);
+        dev.log(response.body);
         LocalNewsModel temp =
             LocalNewsModel.fromJson(jsonDecode(response.body));
         if (temp.status == "ok") {
           setlocalNewsModel(temp);
+          if (temp.totalResults == 0) {
+            newsapp_message(context,
+                    messageHeader: "Notification",
+                    messageBody: 'No News Record Founded',
+                    btnType: 1)
+                .show();
+          }
           notifyListeners();
         } else {
           newsapp_message(context, messageHeader: "${temp.status}", btnType: 2)
@@ -239,5 +247,9 @@ class HomeProvider extends ChangeNotifier {
     } finally {
       setsearchDataLoading(false);
     }
+  }
+
+  void clearSearchData() {
+    searchNewsController.clear();
   }
 }
