@@ -8,6 +8,7 @@ import 'package:news_app/utils/main_body.dart';
 import 'package:news_app/utils/network_connection_check_class.dart';
 import 'package:news_app/widgets/common_input.dart';
 import 'package:news_app/widgets/common_news_card.dart';
+import 'package:news_app/widgets/news_message.dart';
 import 'package:provider/provider.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -65,8 +66,17 @@ class _SearchScreenState extends State<SearchScreen> {
                       : Colors.transparent,
                   suffixIcon: IconButton(
                     onPressed: () {
-                      homeProvider.getSearchFilterData(
-                          context, homeProvider.getsearchNewsController.text);
+                      if (homeProvider.getsearchNewsController.text.isEmpty) {
+                        newsapp_message(
+                          context,
+                          messageHeader: 'Notofocation!!',
+                          messageBody: 'Search Cannot be Blank',
+                          btnType: 1,
+                        ).show();
+                      } else {
+                        homeProvider.getSearchFilterData(
+                            context, homeProvider.getsearchNewsController.text);
+                      }
                     },
                     icon: Icon(
                       Ionicons.search_circle,

@@ -8,7 +8,6 @@ import 'dart:developer' as dev;
 import 'package:rflutter_alert/rflutter_alert.dart';
 
 class InternetConnectionChecker {
-  // Singleton instance
   static final InternetConnectionChecker _instance =
       InternetConnectionChecker._internal();
 
@@ -53,11 +52,11 @@ class InternetConnectionChecker {
           ]).show();
       dev.log('network fasle');
       return false;
-      // return false; // No internet connection
+      // No internet connection
     } else {
       dev.log('network true');
       return true;
-      // return true; // Internet connection available
+      // Internet connection available
     }
   }
 }
